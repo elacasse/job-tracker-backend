@@ -8,6 +8,11 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+RUN echo "alias ll='ls -lah'" >> /etc/bash.bashrc
+
+# Change www-data UID/GID to match host user (1000)
+RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
+
 WORKDIR /var/www/html
 
 COPY . .
