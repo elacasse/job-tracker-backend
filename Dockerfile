@@ -1,8 +1,8 @@
-FROM php:8.3-fpm
+FROM php:8.5-fpm
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev \
+RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
+    git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev default-mysql-client \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # Install Composer
@@ -12,6 +12,14 @@ RUN echo "alias ll='ls -lah'" >> /etc/bash.bashrc
 
 # Change www-data UID/GID to match host user (1000)
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
+
+# Make sure www-data has a writable home
+ENV HOME=/home/www-data
+ENV COMPOSER_HOME=/home/www-data/.composer
+ENV COMPOSER_CACHE_DIR=/home/www-data/.composer/cache
+
+RUN mkdir -p /home/www-data/.composer/cache \
+  && chown -R www-data:www-data /home/www-data
 
 WORKDIR /var/www/html
 

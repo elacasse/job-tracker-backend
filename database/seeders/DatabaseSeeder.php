@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Application;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,11 +17,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        Application::create([
+            'name' => 'Postman',
+            'token_hash' => Hash::make(env('SEED_ADMIN_APP_TOKEN_POSTMAN')),
+        ]);
+
+        Application::create([
+            'name' => 'job-tracker.test',
+            'token_hash' => Hash::make(env('SEED_ADMIN_APP_TOKEN_FRONTEND')),
+        ]);
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => env('SEED_ADMIN_NAME'),
+            'email' => env('SEED_ADMIN_EMAIL'),
+            'password' => Hash::make(env('SEED_ADMIN_PASSWORD')),
+        ]);
+
+        User::factory()
+            ->count(2)
+            ->create();
+
+        $this->call([
+            PostingSeeder::class,
         ]);
     }
 }

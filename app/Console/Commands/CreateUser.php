@@ -40,7 +40,7 @@ class CreateUser extends Command
 
         if (!$password) {
             $password = $this->secret('Password');
-            $confirm  = $this->secret('Confirm Password');
+            $confirm = $this->secret('Confirm Password');
 
             if ($password !== $confirm) {
                 $this->error('Passwords do not match.');
@@ -50,8 +50,8 @@ class CreateUser extends Command
 
         // Create user
         $user = User::create([
-            'name'     => $name,
-            'email'    => $email,
+            'name' => $name,
+            'email' => $email,
             'password' => Hash::make($password),
         ]);
 

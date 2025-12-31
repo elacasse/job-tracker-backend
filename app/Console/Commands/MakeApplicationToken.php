@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Models\Application;
+use Illuminate\Console\Command;
 use Random\RandomException;
 use Symfony\Component\Console\Command\Command as BaseCommand;
 

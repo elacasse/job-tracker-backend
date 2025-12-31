@@ -44,11 +44,13 @@ class AuthenticateApplication
     private function unauthorized(): JsonResponse
     {
         return response()->json([
-            'errors' => [[
-                'status' => '401',
-                'title'  => 'InvalidApplicationToken',
-                'detail' => 'A valid application token is required to access this API.',
-            ]]
+            'errors' => [
+                [
+                    'status' => '401',
+                    'title' => 'InvalidApplicationToken',
+                    'detail' => 'A valid application token is required to access this API.',
+                ]
+            ]
         ], 401);
     }
 }

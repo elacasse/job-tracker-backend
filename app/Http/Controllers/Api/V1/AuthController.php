@@ -14,7 +14,7 @@ class AuthController extends Controller
     public function login(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'email'    => ['required', 'email'],
+            'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
@@ -23,11 +23,13 @@ class AuthController extends Controller
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
             return response()->json([
-                'errors' => [[
-                    'status' => '401',
-                    'title'  => 'InvalidCredentials',
-                    'detail' => 'Email or password is incorrect.',
-                ]],
+                'errors' => [
+                    [
+                        'status' => '401',
+                        'title' => 'InvalidCredentials',
+                        'detail' => 'Email or password is incorrect.',
+                    ]
+                ],
             ], 401);
         }
 
@@ -36,10 +38,10 @@ class AuthController extends Controller
 
         return response()->json([
             'data' => [
-                'type'       => 'token',
-                'id'         => (string) $user->id,
+                'type' => 'token',
+                'id' => (string)$user->id,
                 'attributes' => [
-                    'token'      => $token,
+                    'token' => $token,
                     'token_type' => 'Bearer',
                 ],
             ],
@@ -59,8 +61,8 @@ class AuthController extends Controller
 
         return response()->json([
             'data' => [
-                'type'       => 'logout',
-                'id'         => $user ? (string) $user->id : null,
+                'type' => 'logout',
+                'id' => $user ? (string)$user->id : null,
                 'attributes' => [
                     'message' => 'Logged out.',
                 ],
@@ -75,10 +77,10 @@ class AuthController extends Controller
 
         return response()->json([
             'data' => [
-                'type'       => 'users',
-                'id'         => (string) $user->id,
+                'type' => 'users',
+                'id' => (string)$user->id,
                 'attributes' => [
-                    'name'  => $user->name,
+                    'name' => $user->name,
                     'email' => $user->email,
                 ],
             ],

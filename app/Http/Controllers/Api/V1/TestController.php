@@ -14,11 +14,11 @@ class TestController extends Controller
 
         return response()->json([
             'data' => [
-                'type'       => 'test',
-                'id'         => $app->id,
+                'type' => 'test',
+                'id' => $app->id,
                 'attributes' => [
                     'application_name' => $app->name,
-                    'message'          => 'Application token is valid.',
+                    'message' => 'Application token is valid.',
                 ],
             ]
         ]);
