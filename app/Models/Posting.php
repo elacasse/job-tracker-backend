@@ -60,4 +60,13 @@ class Posting extends Model
         'status',
         'cover_letter',
     ];
+
+    protected static function booted(): void
+    {
+        static::creating(function (self $posting) {
+            if (!$posting->user_id && auth()->check()) {
+                $posting->user_id = auth()->id();
+            }
+        });
+    }
 }

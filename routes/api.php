@@ -18,6 +18,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/v1/logout', [AuthController::class, 'logout']);
 
     JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar $server) {
-        $server->resource('postings', JsonApiController::class)->readOnly();
+        $server->resource('postings', JsonApiController::class);
     });
 });

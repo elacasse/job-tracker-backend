@@ -2,6 +2,7 @@
 
 namespace App\JsonApi\V1\Postings;
 
+use App\JsonApi\Filters\ContainsFilter;
 use App\Models\Posting;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Number;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Str;
+use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
@@ -46,15 +48,15 @@ class PostingSchema extends Schema
             ID::make()->uuid(),
             BelongsTo::make('user')->type('users'),
             Number::make('userId'),
-            Str::make('source'),
+            Str::make('source')->sortable(),
             Str::make('sourceId'),
-            Str::make('employmentType'),
-            Str::make('workMode'),
+            Str::make('employmentType')->sortable(),
+            Str::make('workMode')->sortable(),
             Str::make('url'),
-            Str::make('company'),
-            Str::make('title'),
+            Str::make('company')->sortable(),
+            Str::make('title')->sortable(),
             Str::make('description'),
-            Str::make('status'),
+            Str::make('status')->sortable(),
             Str::make('coverLetter'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
@@ -69,6 +71,14 @@ class PostingSchema extends Schema
     public function filters(): array
     {
         return [
+            Where::make('status'),
+            Where::make('workMode'),
+            Where::make('employmentType'),
+            Where::make('source'),
+
+            ContainsFilter::make('company'),
+            ContainsFilter::make('title'),
+
             WhereIdIn::make($this),
         ];
     }
