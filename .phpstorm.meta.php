@@ -2254,7 +2254,7 @@ namespace PHPSTORM_META {
 'signed','throttle','verified',);
         registerArgumentsSet('routes', 
 'sanctum.csrf-cookie',
-'v1.postings.index','v1.postings.show','storage.local',);
+'v1.postings.index','v1.postings.store','v1.postings.show','v1.postings.update','v1.postings.destroy','storage.local',);
         registerArgumentsSet('views', 
 'laravel-exceptions-renderer::components.badge','laravel-exceptions-renderer::components.empty-state','laravel-exceptions-renderer::components.file-with-line','laravel-exceptions-renderer::components.formatted-source','laravel-exceptions-renderer::components.frame',
 'laravel-exceptions-renderer::components.frame-code','laravel-exceptions-renderer::components.header','laravel-exceptions-renderer::components.http-method','laravel-exceptions-renderer::components.icons.alert','laravel-exceptions-renderer::components.icons.check',
