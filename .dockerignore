@@ -1,0 +1,11 @@
+vendor
+.gitattributes
+.gitignore
+.phpstorm.meta.php
+.env
+.env.example
+.editorconfig
+_ide_helper.php
+Dockerfile
+Dockerfile.prod
+.dockerignore

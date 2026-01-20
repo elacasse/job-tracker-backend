@@ -32,13 +32,5 @@ class DatabaseSeeder extends Seeder
             'email' => env('SEED_ADMIN_EMAIL'),
             'password' => Hash::make(env('SEED_ADMIN_PASSWORD')),
         ]);
-
-        User::factory()
-            ->count(2)
-            ->create();
-
-        $this->call([
-            PostingSeeder::class,
-        ]);
     }
 }

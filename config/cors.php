@@ -7,6 +7,8 @@ return [
 
     'allowed_origins' => [
         'http://job-tracker.test',
+        'http://job-tracker.ericlacasse.ca:88',
+        'http://job-tracker.ericlacasse.ca',
     ],
 
     'allowed_origins_patterns' => [],

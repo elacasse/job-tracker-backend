@@ -1,0 +1,41 @@
+FROM php:8.5-fpm
+
+# Install system dependencies
+RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
+    git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev default-mysql-client \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN docker-php-ext-enable opcache || true
+
+COPY docker/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+
+# Composer available in runtime
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+
+# Copy application source (includes artisan)
+COPY . .
+RUN rm -r docker
+RUN rm nginx.conf
+
+# Now run composer in the correct context so artisan exists and scripts work
+RUN composer install \
+  --no-dev \
+  --no-interaction \
+  --no-ansi \
+  --no-progress \
+  --prefer-dist \
+  --optimize-autoloader
+
+# Permissions
+RUN mkdir -p storage bootstrap/cache \
+  && chown -R www-data:www-data storage bootstrap/cache \
+  && chmod -R 775 storage bootstrap/cache
+
+ENV APP_ENV=production \
+    APP_DEBUG=false
+
+EXPOSE 9000
+CMD ["php-fpm"]
