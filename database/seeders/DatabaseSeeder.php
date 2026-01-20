@@ -27,9 +27,10 @@ class DatabaseSeeder extends Seeder
             'token_hash' => Hash::make(env('SEED_ADMIN_APP_TOKEN_FRONTEND')),
         ]);
 
-        User::factory()->create([
+        User::create([
             'name' => env('SEED_ADMIN_NAME'),
             'email' => env('SEED_ADMIN_EMAIL'),
+            'email_verified_at' => now(),
             'password' => Hash::make(env('SEED_ADMIN_PASSWORD')),
         ]);
     }
