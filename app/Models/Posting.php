@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Posting newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Posting query()
  * @mixin \Eloquent
+ * @property mixed $user_id
  */
 class Posting extends Model
 {

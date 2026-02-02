@@ -1,9 +1,17 @@
 FROM php:8.5-fpm
 
 # Install system dependencies
-RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
-    git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev default-mysql-client \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+RUN apt-get update
+RUN apt-get dist-upgrade -y
+RUN apt-get install -y git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev default-mysql-client nano
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
+
+# Copy Xdebug settings
+COPY docker/99-xdebug.ini /usr/local/etc/php/conf.d/99-xdebug.ini
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer

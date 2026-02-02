@@ -19,5 +19,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     JsonApiRoute::server('v1')->prefix('v1')->resources(function (ResourceRegistrar $server) {
         $server->resource('postings', JsonApiController::class);
+        $server->resource('users', JsonApiController::class);
     });
 });

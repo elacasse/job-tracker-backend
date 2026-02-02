@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\PersonalAccessToken;
+use LaravelJsonApi\Core\Responses\DataResponse;
 
 class AuthController extends Controller
 {
@@ -70,20 +71,11 @@ class AuthController extends Controller
         ]);
     }
 
-    public function me(Request $request): JsonResponse
+    public function me(Request $request)
     {
         /** @var User $user */
         $user = $request->user();
 
-        return response()->json([
-            'data' => [
-                'type' => 'users',
-                'id' => (string)$user->id,
-                'attributes' => [
-                    'name' => $user->name,
-                    'email' => $user->email,
-                ],
-            ],
-        ]);
+        return DataResponse::make($user)->withServer('v1');
     }
 }
