@@ -16,8 +16,24 @@ class UserRequest extends ResourceRequest
      */
     public function rules(): array
     {
+        $user = $this->model();
+
         return [
-            // @TODO
+            'name' => ['required', 'string', 'max:255'],
+            'title' => ['nullable', 'string', 'max:255'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'state' => ['nullable', 'string', 'max:255'],
+            'country' => ['nullable', 'string', 'max:255'],
+            'zip' => ['nullable', 'string', 'max:50'],
+            'phone' => ['nullable', 'string', 'max:50'],
+
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email')->ignore($user?->getKey()),
+            ],
         ];
     }
 

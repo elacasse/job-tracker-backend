@@ -40,6 +40,7 @@ class UserSchema extends Schema
             Str::make('country')->sortable(),
             Str::make('zip'),
             Str::make('phone'),
+            Str::make('email'),
 
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
